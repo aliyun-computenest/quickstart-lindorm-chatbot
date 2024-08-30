@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="计算巢是阿里云开放给企业应用服务商的服务管理平台。服务商能够在计算巢上发布私有化部署服务，为其客户提供云上软件一键部署的能力；同时也支持全托管模式的服务，赋能服务商托管其客户资源。">
+  <title>计算巢 lindorm+langchian文档 - Aliyun 计算巢 x Demo</title>
+
+  <link rel="shortcut icon" href="img/favicon.ico">
+
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css">
+  <link rel="stylesheet" href="css/theme.css">
+  
+
+  
+
+  
+  
+
+  
+    <script src="search/main.js"></script>
+  
+
+  
+
+  <script src="js/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="nav">
+      <div class="nav-inner">
+        <div class="logo">
+          <img src="./img/logo-2x.png">
+        </div>
+        <div class="nav-list">
+          <ul>
+          
+              <li><a href="#lindormlangchian">计算巢 lindorm+langchian文档</a></li>
+              
+          
+              <li><a href="#_1">系统简介：</a></li>
+              
+          
+              <li><a href="#chatbot">计算巢一键拉起Chatbot</a></li>
+              
+                  <li><a href="#31">3.1 创建知识库设置参数：</a></li>
+                  
+              
+                  <li><a href="#32-rerank">3.2 Rerank演示</a></li>
+                  
+              
+                  <li><a href="#33">3.3 父子文档演示</a></li>
+                  
+              
+          
+              <li><a href="#_2">服务部署原理：</a></li>
+              
+          
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="content theme-github">
+      
+      <div class="content-inner">        
+        
+        <h1 id="lindormlangchian">计算巢 lindorm+langchian文档</h1>
+<h1 id="_1">系统简介：</h1>
+<p>整体分为两个部分，一个是LLM对话，为直接对话大模型。另一个为知识库问答，用户问题先在知识库中进行近似检索，然后再把近似检索结果与问题进行Prompt再提交大模型。该系统将Langchain与Lindorm进行了深度融合，集成了LindormAl的LLM、Embedding、Rerank模型，为解决LLM模型部署较占用资源的问题，同时支持通过API Key访问通义千问的方式；集成了Lindorm的搜索与向量引擎，支持近似检索、向量文本混合检索等；支持父子文档的chunk切分与查询，提升上下文的关联性</p>
+<h1 id="chatbot">计算巢一键拉起Chatbot</h1>
+<p><strong>前提条件</strong></p>
+<ul>
+<li>
+<p>开通LindormAi引擎：<a href="https://help.aliyun.com/document_detail/2399392.html?spm=a2c4g.2393245.0.i1">https://help.aliyun.com/document_detail/2399392.html</a> 集成了Embedding、Rerank模型的能力</p>
+</li>
+<li>
+<p>开通Lindorm搜索与向量：<a href="https://help.aliyun.com/document_detail/2787357.html?spm=a2c4g.2787356.0.i2">https://help.aliyun.com/document_detail/2787357.html</a> </p>
+</li>
+<li>
+<p>获取Dashscope Apikey：<a href="https://help.aliyun.com/zh/dashscope/opening-service?spm=a2c4g.11174283.0.i3">https://help.aliyun.com/zh/dashscope/opening-service</a></p>
+</li>
+</ul>
+<p>LindormAI引擎与Lindorm向量实例务必选择在同一个vpc内，且将实例的白名单配置为该vpc内的网段，确保部署Chatbot的服务ECS能正确访问。 以上实例开通或配置有疑问，请提Lindorm工单，我们会拉对接群提供支持。</p>
+<p><strong>开通指南：</strong></p>
+<p>配置如以下截图所示。</p>
+<p><img alt="截屏2024-08-27 上午10.59.22.png" src="1.png" /></p>
+<p>创建成功后，登录即可, 账号是 amdin， 密码为上述软件配置设置的密码</p>
+<p><img alt="截屏2024-08-27 上午11.29.29.png" src="2.png" /></p>
+<p><strong>使用指南</strong></p>
+<h3 id="31">3.1 创建知识库设置参数：</h3>
+<ul>
+<li>
+<p>是否开启混合检索：指的是向量与全文混合检索</p>
+</li>
+<li>
+<p>自定义路由键：假设您有根据类似用户id查询的需求，可以使用自定义路由键功能，具备海量索引空间功能</p>
+</li>
+<li>
+<p>父子文档Chunk切分：使用该功能，切分的文档更加具备上下文关联性</p>
+</li>
+</ul>
+<p><img alt="截屏2024-08-29 下午7.12.21.png" src="3.png" /></p>
+<h3 id="32-rerank">3.2 Rerank演示</h3>
+<p><img alt="截屏2024-08-29 下午7.19.46.png" src="4.png" /></p>
+<p><img alt="截屏2024-08-29 下午7.24.24.png" src="5.png" /></p>
+<h3 id="33">3.3 父子文档演示</h3>
+<p><img alt="截屏2024-08-29 下午7.31.20.png" src="6.png" /></p>
+<p><img alt="截屏2024-08-29 下午7.31.59.png" src="7.png" /></p>
+<h1 id="_2">服务部署原理：</h1>
+<p><strong>环境需求</strong></p>
+<ol>
+<li>
+<p>机型： ecs.g6 或 ecs.g7 通用机型即可</p>
+</li>
+<li>
+<p>操作系统：Ubuntu 22.04 64位</p>
+</li>
+<li>
+<p>python版本:  3.10 (上述操作系统默认python版本)</p>
+</li>
+</ol>
+<p><strong>前置条件</strong></p>
+<p>(lindorm AI引擎、搜索引擎、向量引擎后续会统一架构 ，再用户侧看到的是一个实例)</p>
+<ol>
+<li>
+<p>Lindorm Search与Vector引擎。</p>
+</li>
+<li>
+<p>Lindorm AI 引擎 </p>
+</li>
+<li>
+<p>DashScope API  key:   直接托管大模型，需要资源较多，且容易频繁触发服务访问超时（为保证演示服务的稳定性，暂时通过APIkey访问通义千问）</p>
+</li>
+</ol>
+<p><strong>依赖安装：</strong></p>
+<ol>
+<li>
+<p>安装lindorm ai：pip3 intall lindormai-0.1.2-py3-none-any.whl 当前ECS内已安装</p>
+</li>
+<li>
+<p>安装langchian与集成Lindorm的插件 整体参考：当前ECS已执行</p>
+</li>
+</ol>
+<pre><code class="language-shell">1. git clone git@github.com:langchain-ai/langchain.git
+
+2. 假设位置在  /data/lindorm/soft/ 目录， 执行以下软链接
+cd /data/lindorm/soft/langchain/libs/community/langchain_community/chat_models
+ln -sf /data/lindorm/soft/langchain_integrations/langchain_community/chat_models/lindormai.py lindormai.py
+cd /data/lindorm/soft/langchain/libs/community/langchain_community/llms
+ln -sf /data/lindorm/soft/langchain_integrations/langchain_community/llms/lindormai.py lindormai.py
+cd /data/lindorm/soft/langchain/libs/community/langchain_community/embeddings
+ln -sf /data/lindorm/soft/langchain_integrations/langchain_community/embeddings/lindormai.py lindormai.py
+cd /data/lindorm/soft/langchain/libs/community/langchain_community/document_compressors
+ln -sf /data/lindorm/soft/langchain_integrations/langchain_community/document_compressors/lindormai_rerank.py lindormai_rerank.py
+cd /data/lindorm/soft/langchain/libs/community/langchain_community/vectorstores
+ln -sf /data/lindorm/soft/langchain_integrations/langchain_community/vectorstores/lindorm_search_store.py lindorm_search_store.py
+cd /data/lindorm/soft/langchain/libs/community/langchain_community/storage
+ln -sf /data/lindorm/soft/langchain_integrations/langchain_community/storage/lindorm_search_bytestore.py  lindorm_search_bytestore.py 
+cd /data/lindorm/soft/langchain/libs/community/langchain_community/retrievers
+ln -sf  /data/lindorm/soft/langchain_integrations/langchain_community/retrievers/lindorm_parent_document_retriever.py  lindorm_parent_document_retriever.py
+
+3. 在langchain目录下执行如下命令将插件安装至本地：
+ pip3 install -e libs/community
+
+</code></pre>
+<ol>
+<li>安装其它python依赖</li>
+</ol>
+<p>可以将下面依赖放在 requirements.txt 文件中，然后执行   pip3 install -r requirements.txt</p>
+<pre><code class="language-shell">pip3 install nltk==3.8.1
+pip3 install gradio==3.28.3
+pip3 install fastapi==0.95.0
+pip3 install numpy==1.23.5
+pip3 install requests~=2.28.2
+pip3 install sentence-transformers
+pip3 install environs
+pip3 install dashscope 
+pip install opensearch-py==2.6.0
+</code></pre>
+<p><strong>环境变量设置</strong></p>
+<p>程序部署在 目录：/data/lindorm/langchain-ChatGLM/</p>
+<p>编辑  /data/lindorm/langchain-ChatGLM/.env 文件</p>
+<pre><code class="language-shell"># LLM大模型，目前支持apikey与本地托管部署的方式
+AI_CHAT_LLM_ENDPOINT=&quot;http://ld-xxxx-proxy-ml.lindorm.rds.aliyuncs.com:9002&quot;
+AI_CHAT_LLM_USERNAME=&quot;root&quot;
+AI_CHAT_LLM_PWD=&quot;xx&quot;
+
+# Embedding模型
+AI_EMB_ENDPOINT=&quot;http://ld-xxxx-proxy-ml.lindorm.rds.aliyuncs.com:9002&quot;
+AI_EMB_USERNAME=&quot;root&quot;
+AI_EMB_PWD=&quot;xx&quot;
+
+# Rerank 模型
+AI_RERANK_ENDPOINT=&quot;http://ld-xxxx-proxy-ml.lindorm.rds.aliyuncs.com:9002&quot;
+AI_RERANK_USERNAME=&quot;root&quot;
+AI_RERANK_PWD=&quot;xx&quot;
+
+# 搜索引擎域名，该实例必须同时包含搜索引擎与向量引擎
+SEARCH_ENDPOINT=&quot;http://ld-xxxx-proxy-search-vpc.lindorm.aliyuncs.com:30070&quot;
+SEARCH_USERNAME=&quot;root&quot;
+SEARCH_PWD=&quot;xx&quot;
+</code></pre>
+<p>编辑  /data/lindorm/langchain-ChatGLM/env 文件，添加 dashscope 的 api key</p>
+<pre><code class="language-shell">export DASHSCOPE_API_KEY=&quot;sk-xxxxx&quot;
+</code></pre>
+<p><strong>程序启动</strong></p>
+<p>cd /data/lindorm/langchain-ChatGLM/，日志文件为 /var/log/chat-lindorm.log</p>
+<pre><code class="language-shell">nohup ./start.sh &gt; /var/log/chat-lindorm.log 2&gt;&amp;1 &amp;
+</code></pre>
+<p>直接访问服务的域名为  http://公网ip:5001</p>
+<p>\============通过以上步骤便可以访问服务,下面的步骤配置nginx与服务开机自启动==============</p>
+<p><strong>配置nginx服务</strong></p>
+<ol>
+<li>
+<p>安装apt install nginx</p>
+</li>
+<li>
+<p>配置代理 在  /etc/nginx/conf.d 新建  chat.conf </p>
+</li>
+</ol>
+<pre><code class="language-shell">server {
+        listen       5000;
+        listen       [::]:5000;
+        server_name  _;
+        root         /usr/share/nginx/html;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        auth_basic &quot;请输入用户和密码&quot;; # 验证时的提示信息
+        auth_basic_user_file /etc/nginx/password; # 认证文件
+
+        location / {
+          proxy_pass http://0.0.0.0:5001/;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection Upgrade;
+        }
+        error_page 404 /404.html;
+        location = /404.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+        }
+}
+
+</code></pre>
+<ol>
+<li>
+<p>设置账号密码：</p>
+<ol>
+<li>
+<p>apt install apache2-utils</p>
+</li>
+<li>
+<p>htpasswd -bc /etc/nginx/password admin 'xxxxxxxx'</p>
+</li>
+</ol>
+</li>
+<li>
+<p>启动nginx服务： systemctl start nginx</p>
+</li>
+<li>
+<p>设置nginx开机自启动：systemctl enable nginx</p>
+</li>
+</ol>
+<p><strong>配置Chatbot服务开机自启动</strong></p>
+<ol>
+<li>cd /lib/systemd/system 新建   chat-lindorm.service </li>
+</ol>
+<pre><code class="language-shell">[Unit]
+Description=ChatLindorm
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+WorkingDirectory=/data/lindorm/langchain-ChatGLM
+ExecStart=/data/lindorm/langchain-ChatGLM/start.sh
+Restart=on-abnormal
+StandardOutput=file:/var/log/chat-lindorm.log
+StandardError=file:/var/log/chat-lindorm.log
+LimitNOFILE=60000
+TimeoutSec=120
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<ol>
+<li>设置开启自启动: systemctl enable chat-lindorm</li>
+</ol>
+        
+      </div>
+
+      <div class="copyrights">© 2009-2022 Aliyun.com 版权所有</div>
+    </div>
+  </div>
+  
+  <!--
+  MkDocs version      : 1.6.0
+  Docs Build Date UTC : 2024-08-30 02:37:54.513464+00:00
+  -->
+</body>
+</html>
